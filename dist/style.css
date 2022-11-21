@@ -1,0 +1,155 @@
+html {
+    font-size: 10px;
+    /* overflow-x: hidden; */
+}
+
+
+
+
+
+:root {
+    --midnight-blue: #03045eff;
+    --dark-cornflower-blue: #023e8aff;
+    --star-command-blue: #0077b6ff;
+    --blue-green: #0096c7ff;
+    --pacific-blue: #00b4d8ff;
+    --sky-blue-crayola: #48cae4ff;
+    --middle-blue: #90e0efff;
+    --blizzard-blue: #ade8f4ff;
+    --light-cyan: #caf0f8ff;
+    --platinum: #e5e5e5ff;
+    --sonic-silver: #6c757dff;
+}
+
+.active {
+    background-color: var(--sonic-silver);
+}
+
+
+.navbar {
+    background-color: var(--star-command-blue)
+}
+
+.container {
+    /* border: 2px solid red; */
+    height: auto;
+    width: auto;
+
+}
+
+/* sidebar */
+.sidebar-wrapper {
+    background-color: var(--platinum);
+
+}
+
+.sidebar-nav {
+    margin-top: 3rem;
+    height: 750px;
+
+}
+
+.sidebar-item {
+    background-color: var(--platinum);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+#projects {
+    background-color: var(--platinum);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+#addProject {
+    background-color: var(--platinum);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+}
+
+
+
+
+.sidebar-item:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+
+
+ul {
+    list-style-type: none;
+
+}
+
+#projects {
+    margin-top: 1rem;
+
+}
+
+#project-heading {
+    font-size: 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.project-item {
+    margin-left: 1rem;
+    font-size: 1.7rem;
+}
+
+i {
+    margin-right: 1rem;
+}
+
+#addBtn {
+    color: white;
+    font-size: large;
+}
+
+/* main content */
+#projectTitle {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+#page-content-wrapper {
+    margin-top: 3.5rem;
+}
+
+.list-group-flush {
+    font-size: 1.5rem;
+}
+
+.taskItem {
+    margin: 1rem 0 1rem;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+input {
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.tt {
+    cursor: pointer;
+}
+
+/* .card {
+    display: none;
+} */
+
+
+/* modal */
+
+.modal {
+    font-size: 1.5rem;
+}
+
+#todoModalLabel {
+    font-size: 2rem;
+
+}
