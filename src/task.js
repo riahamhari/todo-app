@@ -2,9 +2,10 @@
 let UNIQUE_ID = 0
 let taskList = []
 
+
 // factory function
-const createTask = (name, description, date, time, priority) => {
-    return { name, description, date, time, priority }
+const createTask = (name, description, date, time, priority, projectSelected) => {
+    return { name, description, date, time, priority, projectSelected }
 
 }
 
@@ -16,21 +17,21 @@ function processNewTask() {
     const date = document.querySelector('#taskDueDate').value
     const time = document.querySelector('#todoTime').value
     const priority = document.querySelector('#taskPriority').value
-    return createTask(name, description, date, time, priority)
+    const projectSelected = document.querySelector('#taskProject').value
+    return createTask(name, description, date, time, priority, projectSelected)
 }
 
 function addTaskToInput() {
-
     const newTask = processNewTask()
     taskList.push(newTask)
-    displayTask(newTask)
-
+    // displayTask(newTask)
+    return newTask
 
 }
 
 
 
-function displayTask(task) {
+export function displayTask(task) {
     UNIQUE_ID++
     const taskListSection = document.querySelector('#taskListSection')
     const taskItem = document.createElement('li')
@@ -75,11 +76,6 @@ function displayTask(task) {
     priority.innerHTML = `<b>Priority:</b> ${task.priority}`
 
 
-
-
-
-
-
     // icons
     const editIcon = document.createElement('i')
     editIcon.classList.add('fa-regular', 'fa-pen-to-square', 'tt')
@@ -110,17 +106,8 @@ function displayTask(task) {
     collapse.appendChild(detailsCard)
     taskListSection.appendChild(collapse)
 
-
-
-
-
-
-
-
-
-
-
 }
 
 export { addTaskToInput }
+export { taskList }
 
