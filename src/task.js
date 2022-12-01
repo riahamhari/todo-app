@@ -24,8 +24,8 @@ function processNewTask() {
 function addTaskToInput() {
     const newTask = processNewTask()
     taskList.push(newTask)
-    // displayTask(newTask)
-    return newTask
+    displayTask(newTask)
+    // return newTask
 
 }
 
@@ -95,6 +95,8 @@ export function displayTask(task) {
     const trashIcon = document.createElement('i')
     trashIcon.classList.add('fa-regular', 'fa-trash-can', 'tt')
     trashIcon.setAttribute('data-bs-placement', 'bottom')
+    // trashIcon.setAttribute('data-bs-toggle', 'modal')
+    // trashIcon.setAttribute('data-bs-target', '#deleteModal')
     trashIcon.setAttribute('title', 'Delete')
 
     taskName.append(formCheckInput, label)

@@ -2,6 +2,7 @@ import { addTaskToInput } from "./task";
 import { addProject } from "./project";
 import { taskList } from "./task";
 import { displayTask } from "./task";
+import { deleteTodo } from "./editingTasks"
 
 
 export function DOMevents() {
@@ -9,9 +10,12 @@ export function DOMevents() {
     const addTaskBtn = document.querySelector('#submitTaskBtn')
     addTaskBtn.addEventListener('click', function () {
         addTaskToInput()
-        for (let i = 0; i < filterProjects(document.querySelector('.active').innerText).length; i++) {
-            displayTask(filterProjects(document.querySelector('.active').innerText)[i])
-        }
+        // for (let i = 0; i < filterProjects(document.querySelector('.active').innerText).length; i++) {
+        //     displayTask(filterProjects(document.querySelector('.active').innerText)[i])
+        // }
+        // console.log("you added a task!!!")
+        clearModalData()
+        deleteEvents()
     })
 
     const addProjectBtn = document.querySelector('#submitProjectBtn')
@@ -39,6 +43,14 @@ export function DOMevents() {
         }
 
     })
+
+    // const deleteWarningBtn = document.querySelector('#deleteWarningBtn')
+    // deleteWarningBtn.addEventListener('click', () => {
+    //     deleteTodo(deleteEvents())
+    //     taskList.forEach((task) => { displayTask(task) })
+    // })
+
+
 
 
 
@@ -88,6 +100,31 @@ const projectEvents = () => {
     }))
 }
 
+const deleteEvents = () => {
+    let deleteBtns = document.querySelectorAll('.fa-trash-can')
+    deleteBtns.forEach((deleteBtn) => deleteBtn.addEventListener('click', (e) => {
+
+        const index = taskList.findIndex(task => task.name === e.composedPath()[2].innerText)
+        deleteTodo(index)
+
+
+
+
+    }))
+
+
+
+}
+
+const clearModalData = () => {
+    document.querySelector('#taskNameInput').value = ''
+    document.querySelector('#taskDescription').value = ''
+    document.querySelector('#taskDueDate').value = ''
+    document.querySelector('#todoTime').value = ''
+    // document.querySelector('#taskPriority').value = ''
+    // document.querySelector('#taskProject').value = ''
+}
+
 
 
 
@@ -97,4 +134,6 @@ const filterProjects = (projectName) => {
     const filtered = taskList.filter(task => task.projectSelected === projectName);
     return filtered
 }
+
+
 

@@ -153,3 +153,9 @@ input {
     font-size: 2rem;
 
 }
+
+/* delete Modal */
+.fa-triangle-exclamation {
+    color: red;
+    font-size: 2rem;
+}
