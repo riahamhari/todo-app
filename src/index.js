@@ -1,5 +1,6 @@
 import { setActiveProject } from "./ui";
 import { DOMevents } from "./UI"
+import { storage } from "./localStorage"
 
 
 setActiveProject()
@@ -9,3 +10,4 @@ setActiveProject()
 DOMevents()
 
 
+storage()

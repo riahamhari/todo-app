@@ -2,6 +2,8 @@
 let UNIQUE_ID = 0
 let taskList = []
 
+import { deleteTodo } from "./editingTasks"
+
 
 // factory function
 const createTask = (name, description, date, time, priority, projectSelected) => {
@@ -95,8 +97,11 @@ export function displayTask(task) {
     const trashIcon = document.createElement('i')
     trashIcon.classList.add('fa-regular', 'fa-trash-can', 'tt')
     trashIcon.setAttribute('data-bs-placement', 'bottom')
-    // trashIcon.setAttribute('data-bs-toggle', 'modal')
-    // trashIcon.setAttribute('data-bs-target', '#deleteModal')
+    trashIcon.addEventListener('click', (e) => {
+        const index = taskList.findIndex(task => task.name === e.composedPath()[2].innerText)
+        deleteTodo(index)
+    })
+
     trashIcon.setAttribute('title', 'Delete')
 
     taskName.append(formCheckInput, label)

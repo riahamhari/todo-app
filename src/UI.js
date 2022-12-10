@@ -10,12 +10,8 @@ export function DOMevents() {
     const addTaskBtn = document.querySelector('#submitTaskBtn')
     addTaskBtn.addEventListener('click', function () {
         addTaskToInput()
-        // for (let i = 0; i < filterProjects(document.querySelector('.active').innerText).length; i++) {
-        //     displayTask(filterProjects(document.querySelector('.active').innerText)[i])
-        // }
-        // console.log("you added a task!!!")
         clearModalData()
-        deleteEvents()
+        // deleteEvents()
     })
 
     const addProjectBtn = document.querySelector('#submitProjectBtn')
@@ -43,14 +39,6 @@ export function DOMevents() {
         }
 
     })
-
-    // const deleteWarningBtn = document.querySelector('#deleteWarningBtn')
-    // deleteWarningBtn.addEventListener('click', () => {
-    //     deleteTodo(deleteEvents())
-    //     taskList.forEach((task) => { displayTask(task) })
-    // })
-
-
 
 
 
@@ -100,21 +88,12 @@ const projectEvents = () => {
     }))
 }
 
-const deleteEvents = () => {
-    let deleteBtns = document.querySelectorAll('.fa-trash-can')
-    deleteBtns.forEach((deleteBtn) => deleteBtn.addEventListener('click', (e) => {
-
-        const index = taskList.findIndex(task => task.name === e.composedPath()[2].innerText)
-        deleteTodo(index)
 
 
 
 
-    }))
 
 
-
-}
 
 const clearModalData = () => {
     document.querySelector('#taskNameInput').value = ''
