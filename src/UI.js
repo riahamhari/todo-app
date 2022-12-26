@@ -2,26 +2,48 @@ import { addTaskToInput } from "./task";
 import { addProject } from "./project";
 import { taskList } from "./task";
 import { displayTask } from "./task";
-import { deleteTodo } from "./editingTasks"
+import { projectList } from "./project";
+import { displayProject } from "./project";
+import { updateModalOptions } from "./project";
+import { storeTasks } from "./localStorage";
+import { getStoredTasks } from "./localStorage";
+
 
 
 export function DOMevents() {
+    window.addEventListener('load', () => {
+        for (let i = 0; i < filterProjects('Inbox').length; i++) {
+            displayTask(filterProjects('Inbox')[i])
+        }
+        projectList.forEach((project) => {
+            displayProject(project)
+            updateModalOptions(project)
+
+        })
+        // console.log(projectList)
+        // console.log(taskList)
+    })
 
     const addTaskBtn = document.querySelector('#submitTaskBtn')
     addTaskBtn.addEventListener('click', function () {
         addTaskToInput()
+        storeTasks(taskList)
         clearModalData()
+        displayActiveTasks()
+
         // deleteEvents()
     })
 
     const addProjectBtn = document.querySelector('#submitProjectBtn')
     addProjectBtn.addEventListener('click', function () {
         addProject()
+        clearProjectModal()
         projectEvents()
         setActiveProject()
-        for (let i = 0; i < filterProjects(document.querySelector('.active').innerText).length; i++) {
-            displayTask(filterProjects(document.querySelector('.active').innerText)[i])
-        }
+
+        // for (let i = 0; i < filterProjects(document.querySelector('.active').innerText).length; i++) {
+        //     displayTask(filterProjects(document.querySelector('.active').innerText)[i])
+        // }
 
     })
 
@@ -30,21 +52,44 @@ export function DOMevents() {
         loadProjectTitle(item.innerText)
         clearDisplay()
         setActiveProject()
+        for (let i = 0; i < filterProjects(`${item.innerText}`).length; i++) {
+            displayTask(filterProjects(`${item.innerText}`)[i])
+        }
     }))
 
     const inbox = document.querySelector('#inbox')
-    inbox.addEventListener('click', function () {
+    inbox.addEventListener('click', () => {
+        loadProjectTitle('Inbox')
+        clearDisplay()
+        setActiveProject()
         for (let i = 0; i < filterProjects('Inbox').length; i++) {
             displayTask(filterProjects('Inbox')[i])
         }
-
     })
+
+
+    // const inbox = document.querySelector('#inbox')
+    // inbox.addEventListener('click', function () {
+    //     for (let i = 0; i < filterProjects('Inbox').length; i++) {
+    //         displayTask(filterProjects('Inbox')[i])
+    //     }
+
+    // })
 
 
 
 
 }
 
+export function displayActiveTasks() {
+    const taskListSection = document.querySelector('#taskListSection')
+    taskListSection.innerHTML = ''
+
+    let current = document.getElementsByClassName("active")[0].innerText
+    for (let i = 0; i < filterProjects(`${current}`).length; i++) {
+        displayTask(filterProjects(`${current}`)[i])
+    }
+}
 
 
 
@@ -63,13 +108,13 @@ export function setActiveProject() {
 
 
 
-const clearDisplay = () => {
+export const clearDisplay = () => {
     const taskListSection = document.querySelector('#taskListSection')
     taskListSection.innerHTML = ''
 
 }
 
-const loadProjectTitle = (title) => {
+export const loadProjectTitle = (title) => {
     const projectTitle = document.querySelector('#projectTitle')
     projectTitle.innerText = title
 
@@ -104,15 +149,31 @@ const clearModalData = () => {
     // document.querySelector('#taskProject').value = ''
 }
 
-
-
-
-
-const filterProjects = (projectName) => {
-
-    const filtered = taskList.filter(task => task.projectSelected === projectName);
-    return filtered
+const clearProjectModal = () => {
+    document.querySelector('#newProjectInput').value = ''
 }
+
+
+
+
+
+export const filterProjects = (projectName) => {
+    if (getStoredTasks().length < 0) {
+        const filtered = taskList.filter(task => task.projectSelected === projectName);
+        return filtered
+    }
+    else {
+        const filtered = getStoredTasks().filter(task => task.projectSelected === projectName);
+        return filtered
+    }
+}
+
+// function loadStoredTasks() {
+//     for (let i = 0; i < getStoredTasks().length; i++) {
+
+//         displayTask(getStoredTasks()[0])
+//     }
+// }
 
 
 

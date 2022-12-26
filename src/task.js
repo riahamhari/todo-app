@@ -1,15 +1,20 @@
+import { deleteTodo } from "./editingTasks"
+import { getStoredTasks } from "./localStorage"
 // gloal unique ID for todo
 let UNIQUE_ID = 0
 let taskList = []
+taskList = getStoredTasks()
 
-import { deleteTodo } from "./editingTasks"
+
 
 
 // factory function
 const createTask = (name, description, date, time, priority, projectSelected) => {
-    return { name, description, date, time, priority, projectSelected }
-
+    UNIQUE_ID++;  // Increment the UNIQUE_ID value
+    return { name, description, date, time, priority, projectSelected, taskId: UNIQUE_ID }  // Add the taskId property to the task object
 }
+
+
 
 // extract task info from modal
 
@@ -20,6 +25,7 @@ function processNewTask() {
     const time = document.querySelector('#todoTime').value
     const priority = document.querySelector('#taskPriority').value
     const projectSelected = document.querySelector('#taskProject').value
+
     return createTask(name, description, date, time, priority, projectSelected)
 }
 
@@ -27,7 +33,8 @@ function addTaskToInput() {
     const newTask = processNewTask()
     taskList.push(newTask)
     displayTask(newTask)
-    // return newTask
+
+
 
 }
 
@@ -38,6 +45,7 @@ export function displayTask(task) {
     const taskListSection = document.querySelector('#taskListSection')
     const taskItem = document.createElement('li')
     taskItem.classList.add('list-group-item', 'taskItem')
+    taskItem.setAttribute('id', `task${UNIQUE_ID}`)
     const taskName = document.createElement('div')
     taskName.classList.add('taskName')
     const formCheckInput = document.createElement('input')
@@ -97,9 +105,16 @@ export function displayTask(task) {
     const trashIcon = document.createElement('i')
     trashIcon.classList.add('fa-regular', 'fa-trash-can', 'tt')
     trashIcon.setAttribute('data-bs-placement', 'bottom')
+    trashIcon.setAttribute('data-task-id', task.taskId)
     trashIcon.addEventListener('click', (e) => {
-        const index = taskList.findIndex(task => task.name === e.composedPath()[2].innerText)
+
+        const taskId = e.target.dataset.taskId
+        console.log(taskId)
+        const index = taskList.findIndex(task => task.taskId === parseInt(taskId))
+
+        taskListSection.innerHTML = ''
         deleteTodo(index)
+
     })
 
     trashIcon.setAttribute('title', 'Delete')

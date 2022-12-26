@@ -19,6 +19,7 @@ html {
     --light-cyan: #caf0f8ff;
     --platinum: #e5e5e5ff;
     --sonic-silver: #6c757dff;
+    --davys-grey: #495057ff;
 }
 
 .active {
@@ -97,6 +98,17 @@ ul {
 .project-item {
     margin-left: 1rem;
     font-size: 1.7rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+#deleteProject {
+    color: transparent;
+}
+
+#deleteProject:hover {
+    color: var(--davys-grey);
+
 }
 
 i {

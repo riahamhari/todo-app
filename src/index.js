@@ -1,13 +1,17 @@
 import { setActiveProject } from "./ui";
+// import { loadTasksInProject } from "./ui";
 import { DOMevents } from "./UI"
-import { storage } from "./localStorage"
+
+
 
 
 setActiveProject()
 
-
+// window.addEventListener("load", () => {
+//     // loadTasksInProject('Inbox')
+//     console.log(taskList)
+// });
 
 DOMevents()
 
 
-storage()
