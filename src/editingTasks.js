@@ -1,6 +1,6 @@
 import { taskList } from "./task";
 import { displayTask } from "./task";
-import { getStoredTasks } from "./localStorage";
+import { getStoredProjects, getStoredTasks } from "./localStorage";
 import { storeTasks } from "./localStorage";
 import { displayActiveTasks } from "./ui";
 import { displayProject, updateModalOptions } from "./project";
@@ -32,22 +32,49 @@ export function deleteTodo(indexOfArray) {
 
 export function deleteProject(nameOfProject) {
 
-    let projects = JSON.parse(localStorage.getItem('projectList'))
+    removeProjectOption(nameOfProject)
+    projectList = []
+    const projects = JSON.parse(localStorage.getItem('projectList'))
 
     const updatedProjects = projects.filter((project) => project.name !== nameOfProject);
-    storeProjects(updatedProjects)
+    for (let i = 0; i < updatedProjects.length; i++) {
+        projectList.push(updatedProjects[i])
+    }
+    localStorage.setItem('projectList', '[]');
+
     // projectList.push(updatedProjects)
     const updatedTasks = taskList.filter((task) => task.projectSelected !== nameOfProject);
-    storeTasks(updatedTasks)
+
     // const inbox = document.querySelector('#inbox')
     // let current = document.getElementsByClassName("active");
     // current[0].className = current[0].className.replace(" active", "")
-    updatedProjects.forEach((project) => updateModalOptions(project))
+    // updatedProjects.forEach((project) => updateModalOptions(project))
+
     updatedProjects.forEach((project) => displayProject(project))
 
-    // inbox.className += " active";
+    // inbox.className += " active";v
     // displayActiveTasks()
 
+    // for (let i = 0; i < updatedProjects.length; i++) {
+    //     console.log(updatedProjects[i])
+    // }
+
+
+    storeTasks(updatedTasks)
+    storeProjects(updatedProjects)
+
+}
+
+function removeProjectOption(name) {
+    const selectElement = document.querySelector('#taskProject');
+    const options = selectElement.options;
+
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].text === name) {
+
+            options.remove(i);
+        }
+    }
 
 
 }

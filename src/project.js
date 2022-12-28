@@ -9,7 +9,7 @@ import { filterProjects } from "./UI"
 import { deleteProject } from "./editingTasks"
 
 let projectList = []
-projectList = getStoredProjects()
+// projectList = getStoredProjects()
 
 const createProject = (name) => {
     const tasks = [];
@@ -58,6 +58,7 @@ export function displayProject(project) {
         e.stopPropagation();
         // Add your delete logic here
         const projectID = e.target.parentNode.innerText
+        console.log(projectID)
 
         // const index = projectList.findIndex(project => project.name === `${projectID}`)
         projectGroup.innerHTML = ''

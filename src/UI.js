@@ -3,6 +3,7 @@ import { addProject } from "./project";
 import { taskList } from "./task";
 import { displayTask } from "./task";
 import { projectList } from "./project";
+import { getStoredProjects } from "./localStorage";
 import { displayProject } from "./project";
 import { updateModalOptions } from "./project";
 import { storeTasks } from "./localStorage";
@@ -15,7 +16,7 @@ export function DOMevents() {
         for (let i = 0; i < filterProjects('Inbox').length; i++) {
             displayTask(filterProjects('Inbox')[i])
         }
-        projectList.forEach((project) => {
+        getStoredProjects().forEach((project) => {
             displayProject(project)
             updateModalOptions(project)
 
