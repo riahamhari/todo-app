@@ -14,4 +14,12 @@ setActiveProject()
 
 DOMevents()
 
+// const modal = document.querySelector('#addTodoModal');
+
+// modal.addEventListener('hide.bs.modal', () => {
+//     // Modal has been closed
+//     console.log('u clicked off the modal')
+
+// });
+
 

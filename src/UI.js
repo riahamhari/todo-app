@@ -8,6 +8,7 @@ import { displayProject } from "./project";
 import { updateModalOptions } from "./project";
 import { storeTasks } from "./localStorage";
 import { getStoredTasks } from "./localStorage";
+import { updateTodo } from "./editingTasks";
 
 
 
@@ -24,6 +25,19 @@ export function DOMevents() {
         // console.log(projectList)
         // console.log(taskList)
     })
+
+    const saveBtn = document.querySelector('#saveBtn')
+    saveBtn.addEventListener('click', function () {
+        updateTodo()
+        displayActiveTasks()
+
+        // Hide the modal
+        $('#updateTodoModal').modal('hide');
+    });
+
+
+
+
 
     const addTaskBtn = document.querySelector('#submitTaskBtn')
     addTaskBtn.addEventListener('click', function () {
@@ -76,6 +90,8 @@ export function DOMevents() {
     //     }
 
     // })
+
+
 
 
 
@@ -159,7 +175,7 @@ const clearProjectModal = () => {
 
 
 export const filterProjects = (projectName) => {
-    if (getStoredTasks().length < 0) {
+    if (getStoredTasks().length <= 0) {
         const filtered = taskList.filter(task => task.projectSelected === projectName);
         return filtered
     }

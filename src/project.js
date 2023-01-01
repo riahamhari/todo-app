@@ -76,9 +76,11 @@ export function displayProject(project) {
 export function updateModalOptions(project) {
     const taskProject = document.querySelector('#taskProject')
     const projectOption = document.createElement('option')
+    const editedTaskProject = document.querySelector('#editedTaskProject')
     projectOption.setAttribute('value', `${project.name}`)
     projectOption.innerText = project.name
     taskProject.appendChild(projectOption)
+    editedTaskProject.appendChild(projectOption)
 }
 
 // A function to generate the projects array from the projectList and taskList arrays

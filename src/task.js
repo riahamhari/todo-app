@@ -1,9 +1,12 @@
 import { deleteTodo } from "./editingTasks"
 import { getStoredTasks } from "./localStorage"
+import { clearDisplay, setActiveProject, filterProjects } from "./UI"
 // gloal unique ID for todo
 let UNIQUE_ID = 0
 let taskList = []
 taskList = getStoredTasks()
+
+export let selectedTodo;
 
 
 
@@ -91,6 +94,19 @@ export function displayTask(task) {
     editIcon.classList.add('fa-regular', 'fa-pen-to-square', 'tt')
     editIcon.setAttribute('data-bs-placement', 'bottom')
     editIcon.setAttribute('title', 'edit')
+    editIcon.setAttribute('type', 'button')
+    editIcon.setAttribute('data-bs-toggle', 'modal')
+    editIcon.setAttribute('data-bs-target', '#updateTodoModal')
+    editIcon.setAttribute('data-task-id', task.taskId)
+    editIcon.addEventListener('click', (e) => {
+        const taskId = e.target.dataset.taskId
+        const index = taskList.findIndex(task => task.taskId === parseInt(taskId))
+        selectedTodo = taskList[index]
+        loadTaskData(taskList[index])
+
+    })
+
+
 
     const priorityIcon = document.createElement('i')
     priorityIcon.classList.add('fa-solid', 'fa-flag', 'tt')
@@ -129,6 +145,27 @@ export function displayTask(task) {
     taskListSection.appendChild(collapse)
 
 }
+
+function loadTaskData(todo) {
+    // const modal = document.querySelector('#addTodoModal');
+    // Get a reference to the input fields
+    const taskNameInput = document.querySelector('#editedTaskNameInput');
+    const taskDescription = document.querySelector('#editedTaskDescription');
+    const taskDueDate = document.querySelector('#editedTaskDueDate');
+    const todoTime = document.querySelector('#editedTodoTime');
+    const taskPriority = document.querySelector('#editedTaskPriority');
+    const taskProject = document.querySelector('#editedTaskProject');
+    // const saveBtn = document.querySelector('#saveBtn');
+    taskNameInput.value = todo.name;
+    taskDescription.value = todo.description;
+    taskDueDate.value = todo.date;
+    todoTime.value = todo.time;
+    taskPriority.value = todo.priority;
+    taskProject.value = todo.projectSelected;
+}
+
+
+
 
 export { addTaskToInput }
 export { taskList }

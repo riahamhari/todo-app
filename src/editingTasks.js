@@ -1,4 +1,4 @@
-import { taskList } from "./task";
+import { taskList, selectedTodo } from "./task";
 import { displayTask } from "./task";
 import { getStoredProjects, getStoredTasks } from "./localStorage";
 import { storeTasks } from "./localStorage";
@@ -79,6 +79,23 @@ function removeProjectOption(name) {
 
 }
 
+export function updateTodo() {
+    const taskNameInput = document.querySelector('#editedTaskNameInput').value;
+    const taskDescription = document.querySelector('#editedTaskDescription').value;
+    const taskDueDate = document.querySelector('#editedTaskDueDate').value;
+    const todoTime = document.querySelector('#editedTodoTime').value;
+    const taskPriority = document.querySelector('#editedTaskPriority').value;
+    const taskProject = document.querySelector('#editedTaskProject').value;
+
+    const index = taskList.findIndex(task => task.taskId === selectedTodo.taskId);
+    taskList[index].name = taskNameInput;
+    taskList[index].description = taskDescription;
+    taskList[index].date = taskDueDate;
+    taskList[index].time = todoTime;
+    taskList[index].priority = taskPriority;
+    taskList[index].projectSelected = taskProject;
+    storeTasks(taskList);
+}
 
 
 
