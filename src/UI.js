@@ -9,6 +9,8 @@ import { updateModalOptions } from "./project";
 import { storeTasks } from "./localStorage";
 import { getStoredTasks } from "./localStorage";
 import { updateTodo } from "./editingTasks";
+import { addDays, isWithinInterval, startOfToday, isToday } from 'date-fns';
+
 
 
 
@@ -34,6 +36,27 @@ export function DOMevents() {
         // Hide the modal
         $('#updateTodoModal').modal('hide');
     });
+
+    const today = document.querySelector('#today')
+    today.addEventListener('click', () => {
+        // console.log(tasksDueToday)
+        loadProjectTitle('Today')
+        clearDisplay()
+        // setActiveProject()
+        tasksDueToday.forEach((taskDue) => {
+            displayTask(taskDue)
+        })
+
+    })
+
+    const nextSevenDays = document.querySelector('#nextSevenDays')
+    nextSevenDays.addEventListener('click', () => {
+        loadProjectTitle('Next 7 Days')
+        clearDisplay()
+        tasksDueInSevenDays.forEach((taskDue) => {
+            displayTask(taskDue)
+        })
+    })
 
 
 
@@ -72,6 +95,14 @@ export function DOMevents() {
         }
     }))
 
+    // const calendarItems = document.querySelectorAll('.calendar-item')
+    // calendarItems.forEach((item) => item.addEventListener('click', () => {
+    //     loadProjectTitle(item.innerText)
+    //     clearDisplay()
+    //     setActiveProject()
+
+    // }))
+
     const inbox = document.querySelector('#inbox')
     inbox.addEventListener('click', () => {
         loadProjectTitle('Inbox')
@@ -81,17 +112,6 @@ export function DOMevents() {
             displayTask(filterProjects('Inbox')[i])
         }
     })
-
-
-    // const inbox = document.querySelector('#inbox')
-    // inbox.addEventListener('click', function () {
-    //     for (let i = 0; i < filterProjects('Inbox').length; i++) {
-    //         displayTask(filterProjects('Inbox')[i])
-    //     }
-
-    // })
-
-
 
 
 
@@ -121,6 +141,23 @@ export function setActiveProject() {
             this.className += " active";
         });
     }
+
+    const calendarItems = document.querySelectorAll('.calendar-item')
+    for (let i = 0; i < calendarItems.length; i++) {
+        calendarItems[i].addEventListener("click", function () {
+            let current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+        });
+    }
+    // const today = document.querySelector('#today')
+    // today.addEventListener("click", () => {
+    //     let current = document.getElementsByClassName("active");
+    //     current[0].className = current[0].className.replace(" active", "");
+    //     this.className += " active";
+    // })
+
+
 }
 
 
@@ -185,12 +222,22 @@ export const filterProjects = (projectName) => {
     }
 }
 
-// function loadStoredTasks() {
-//     for (let i = 0; i < getStoredTasks().length; i++) {
+// get current day
+const today = startOfToday();
 
-//         displayTask(getStoredTasks()[0])
-//     }
-// }
+// Get the date 7 days from now
+const sevenDaysFromNow = addDays(today, 7);
+
+const tasksDueInSevenDays = getStoredTasks().filter((task) => {
+    // Convert the due date to a Date object
+    const dueDate = new Date(task.date);
+
+    // Check if the due date is within the next 7 days
+    return isWithinInterval(dueDate, { start: today, end: sevenDaysFromNow });
+});
+
+
+const tasksDueToday = getStoredTasks().filter((task) => isToday(new Date(task.date)))
 
 
 

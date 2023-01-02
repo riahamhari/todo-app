@@ -56,6 +56,12 @@ html {
     margin-bottom: 1rem;
 }
 
+.calendar-item {
+    background-color: var(--platinum);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
 #projects {
     background-color: var(--platinum);
     font-size: 2rem;
@@ -73,6 +79,11 @@ html {
 
 
 .sidebar-item:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.calendar-item:hover {
     background-color: lightgray;
     cursor: pointer;
 }
