@@ -37,22 +37,26 @@ export function DOMevents() {
         $('#updateTodoModal').modal('hide');
     });
 
-    const today = document.querySelector('#today')
-    today.addEventListener('click', () => {
-        // console.log(tasksDueToday)
-        loadProjectTitle('Today')
-        clearDisplay()
-        // setActiveProject()
-        tasksDueToday.forEach((taskDue) => {
-            displayTask(taskDue)
-        })
 
-    })
 
     const nextSevenDays = document.querySelector('#nextSevenDays')
     nextSevenDays.addEventListener('click', () => {
         loadProjectTitle('Next 7 Days')
         clearDisplay()
+        const tasksDueInSevenDays = getStoredTasks().filter((task) => {
+            // Convert the due date to a Date object
+
+            const dueDate = new Date(task.date);
+            // get current day
+            const today = startOfToday();
+
+            // Get the date 7 days from now
+            const sevenDaysFromNow = addDays(today, 7);
+
+
+            // Check if the due date is within the next 7 days
+            return isWithinInterval(dueDate, { start: today, end: sevenDaysFromNow });
+        });
         tasksDueInSevenDays.forEach((taskDue) => {
             displayTask(taskDue)
         })
@@ -113,6 +117,25 @@ export function DOMevents() {
         }
     })
 
+    const today = document.querySelector('#today')
+    today.addEventListener('click', () => {
+        const tasksDueToday = getStoredTasks().filter((task) => isToday(new Date(task.date)))
+
+        loadProjectTitle('Today')
+        clearDisplay()
+        // setActiveProject()
+        tasksDueToday.forEach((taskDue) => {
+            displayTask(taskDue)
+        })
+
+    })
+
+    const angleDownIcon = document.querySelector('.fa-angle-down');
+
+    angleDownIcon.addEventListener('click', () => {
+        angleDownIcon.classList.toggle('rotate-90-degrees-clockwise');
+        angleDownIcon.classList.toggle('rotate-90-degrees-anti-clockwise');
+    });
 
 
 
@@ -222,22 +245,11 @@ export const filterProjects = (projectName) => {
     }
 }
 
-// get current day
-const today = startOfToday();
-
-// Get the date 7 days from now
-const sevenDaysFromNow = addDays(today, 7);
-
-const tasksDueInSevenDays = getStoredTasks().filter((task) => {
-    // Convert the due date to a Date object
-    const dueDate = new Date(task.date);
-
-    // Check if the due date is within the next 7 days
-    return isWithinInterval(dueDate, { start: today, end: sevenDaysFromNow });
-});
 
 
-const tasksDueToday = getStoredTasks().filter((task) => isToday(new Date(task.date)))
+
+
+
 
 
 

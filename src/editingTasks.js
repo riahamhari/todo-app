@@ -12,7 +12,7 @@ import { projectList } from "./project";
 
 
 export function deleteTodo(indexOfArray) {
-    console.log(indexOfArray)
+    // console.log(indexOfArray)
     let tasks = JSON.parse(localStorage.getItem('taskList'));
 
     tasks.splice(indexOfArray, 1)

@@ -1,10 +1,14 @@
 import { deleteTodo } from "./editingTasks"
-import { getStoredTasks } from "./localStorage"
+import { getStoredTasks, storeTasks } from "./localStorage"
 import { clearDisplay, setActiveProject, filterProjects } from "./UI"
 // gloal unique ID for todo
 let UNIQUE_ID = 0
+
 let taskList = []
-taskList = getStoredTasks()
+
+if (getStoredTasks()) {
+    taskList = getStoredTasks()
+}
 
 export let selectedTodo;
 
@@ -14,7 +18,7 @@ export let selectedTodo;
 // factory function
 const createTask = (name, description, date, time, priority, projectSelected) => {
     UNIQUE_ID++;  // Increment the UNIQUE_ID value
-    return { name, description, date, time, priority, projectSelected, taskId: UNIQUE_ID }  // Add the taskId property to the task object
+    return { name, description, date, time, priority, projectSelected, taskId: UNIQUE_ID, completed: false }  // Add the taskId property to the task object
 }
 
 
@@ -54,6 +58,8 @@ export function displayTask(task) {
     const formCheckInput = document.createElement('input')
     formCheckInput.classList.add('form-check-input', 'me-1')
     formCheckInput.setAttribute('type', 'checkbox')
+    formCheckInput.setAttribute('data-task-id', task.taskId)
+
     formCheckInput.setAttribute('id', `todo${UNIQUE_ID}`)
 
     const label = document.createElement('label')
@@ -64,6 +70,46 @@ export function displayTask(task) {
     label.setAttribute('aria-controls', `collapseDetails${UNIQUE_ID}`)
     label.setAttribute('type', 'button')
     label.textContent = ` ${task.name}`
+
+    if (task.completed === true) {
+        formCheckInput.checked = true
+        label.style.textDecoration = "line-through"
+
+    }
+    else {
+        formCheckInput.checked = false
+        label.style.textDecoration = "none"
+    }
+
+    formCheckInput.addEventListener('change', (event) => {
+        // if (event.target.checked) {
+        //     task.completed = true
+        //     // label.style.textDecoration = "line-through"
+        //     // The checkbox has been checked
+        // } else {
+        //     task.completed = false
+        //     // The checkbox has not been checked
+        // }
+        if (event.target.checked) {
+            let taskId = event.target.dataset.taskId
+            const task = taskList.find(task => task.taskId === parseInt(taskId))
+            task.completed = true;
+            label.style.textDecoration = "line-through"
+            storeTasks(taskList)
+        } else {
+            let taskId = event.target.dataset.taskId
+            const task = taskList.find(task => task.taskId === parseInt(taskId))
+            task.completed = false;
+            label.style.textDecoration = "none"
+            storeTasks(taskList)
+        }
+
+
+    });
+
+
+
+
 
     const taskAction = document.createElement('div')
     taskAction.classList.add('taskAction')
@@ -111,12 +157,34 @@ export function displayTask(task) {
     const priorityIcon = document.createElement('i')
     priorityIcon.classList.add('fa-solid', 'fa-flag', 'tt')
     priorityIcon.setAttribute('data-bs-placement', 'bottom')
-    priorityIcon.setAttribute('title', 'Change Priority')
+    priorityIcon.setAttribute('title', 'Priority')
 
-    const moveIcon = document.createElement('i')
-    moveIcon.classList.add('fa-solid', 'fa-circle-arrow-right', 'tt')
-    moveIcon.setAttribute('data-bs-placement', 'bottom')
-    moveIcon.setAttribute('title', 'Move To Project')
+    if (task.priority === 'Low') {
+        priorityIcon.style.color = 'var(--star-command-blue)'
+    }
+    if (task.priority === 'Medium') {
+        priorityIcon.style.color = 'var(--alloy-orange)'
+    }
+    if (task.priority === 'High') {
+        priorityIcon.style.color = 'var(--rufous)'
+    }
+
+    // const moveIcon = document.createElement('i')
+    // moveIcon.classList.add('fa-solid', 'fa-circle-arrow-right', 'tt')
+    // moveIcon.setAttribute('data-bs-placement', 'bottom')
+    // moveIcon.setAttribute('title', 'Move To Project')
+    // moveIcon.setAttribute('type', 'button')
+    // moveIcon.setAttribute('data-container', 'body')
+    // moveIcon.setAttribute('data-toggle', 'popover')
+    // moveIcon.setAttribute('data-placement', 'left')
+    // moveIcon.setAttribute('data-content', 'Vivamus sagittis lacus vel augue laoreet rutrum faucibus.')
+    // moveIcon.setAttribute('data-trigger', 'focus')
+    // moveIcon.addEventListener('click', () => {
+    //     $(function () { 
+    //         $('[data-toggle="popover"]').popover()
+    //     })
+    // })
+
 
     const trashIcon = document.createElement('i')
     trashIcon.classList.add('fa-regular', 'fa-trash-can', 'tt')
@@ -136,7 +204,7 @@ export function displayTask(task) {
     trashIcon.setAttribute('title', 'Delete')
 
     taskName.append(formCheckInput, label)
-    taskAction.append(editIcon, priorityIcon, moveIcon, trashIcon)
+    taskAction.append(priorityIcon, editIcon, trashIcon)
     taskItem.append(taskName, taskAction)
     taskListSection.appendChild(taskItem)
 
@@ -163,6 +231,7 @@ function loadTaskData(todo) {
     taskPriority.value = todo.priority;
     taskProject.value = todo.projectSelected;
 }
+
 
 
 

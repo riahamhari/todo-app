@@ -94,6 +94,16 @@ function generateProjectsArray() {
     }, []);
 }
 
+function populateMoveOptions(projects) {
+    const selectElement = document.querySelector('#project');
+    selectElement.innerHTML = '';
+    projects.forEach((project) => {
+        const optionElement = document.createElement('option');
+        optionElement.value = project.name;
+        optionElement.innerHTML = project.name;
+        selectElement.appendChild(optionElement);
+    });
+}
 
 
 

@@ -20,6 +20,8 @@ html {
     --platinum: #e5e5e5ff;
     --sonic-silver: #6c757dff;
     --davys-grey: #495057ff;
+    --alloy-orange: #ca6702ff;
+    --rufous: #ae2012ff;
 }
 
 .active {
@@ -28,7 +30,11 @@ html {
 
 
 .navbar {
-    background-color: var(--star-command-blue)
+    background-color: var(--star-command-blue);
+}
+
+h1 {
+    font-style: italic;
 }
 
 .container {
@@ -152,6 +158,14 @@ i {
 
 }
 
+.form-check-label {
+    margin-left: 1.5rem;
+}
+
+.form-check-label:hover {
+    transform: translateY(-3px);
+}
+
 input {
     cursor: pointer;
     font-size: 1.5rem;
@@ -181,4 +195,39 @@ input {
 .fa-triangle-exclamation {
     color: red;
     font-size: 2rem;
+}
+
+/* icon */
+
+.fa-circle-arrow-right {
+    color: var(--davys-grey);
+}
+
+.fa-pen-to-square {
+    color: var(--davys-grey)
+}
+
+.fa-pen-to-square:hover {
+    transform: translateY(-3px);
+}
+
+.fa-trash-can {
+    color: var(--davys-grey);
+}
+
+.fa-trash-can:hover {
+    transform: translateY(-3px);
+}
+
+.fa-plus:hover {
+    transform: translateY(-2px);
+}
+
+
+.rotate-90-degrees-clockwise {
+    transform: rotate(0deg);
+}
+
+.rotate-90-degrees-anti-clockwise {
+    transform: rotate(-90deg);
 }
