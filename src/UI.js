@@ -137,6 +137,12 @@ export function DOMevents() {
         angleDownIcon.classList.toggle('rotate-90-degrees-anti-clockwise');
     });
 
+    const projectHeading = document.querySelector('#project-heading')
+    projectHeading.addEventListener('click', () => {
+        angleDownIcon.classList.toggle('rotate-90-degrees-clockwise');
+        angleDownIcon.classList.toggle('rotate-90-degrees-anti-clockwise');
+    })
+
 
 
 }
